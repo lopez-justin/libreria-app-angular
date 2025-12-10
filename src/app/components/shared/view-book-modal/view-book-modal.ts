@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Book } from '../../../models/book';
 
@@ -12,8 +12,9 @@ import { Book } from '../../../models/book';
 export class ViewBookModalComponent {
   @Input() book: Book | null = null;
   @Input() isVisible: boolean = false;
+  @Output() closeModal = new EventEmitter<unknown>();
 
-  closeModal(): void {
+  closeBookModal(): void {
     this.isVisible = false;
   }
 
@@ -28,7 +29,7 @@ export class ViewBookModalComponent {
   getConditionText(condition: string): string {
     const conditions: {[key: string]: string} = {
       'excelente': 'Excelente',
-      'bueno': 'Bueno', 
+      'bueno': 'Bueno',
       'regular': 'Regular',
       'malo': 'Malo'
     };

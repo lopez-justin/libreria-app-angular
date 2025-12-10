@@ -1,0 +1,26 @@
+.container-fluid {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.row.g-4 {
+  margin: 0 -12px;
+}
+
+.row.g-4 > [class*="col-"] {
+  padding: 0 12px;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 0 16px;
+  }
+  
+  .row.g-4 {
+    margin: 0 -8px;
+  }
+  
+  .row.g-4 > [class*="col-"] {
+    padding: 0 8px;
+  }
+}

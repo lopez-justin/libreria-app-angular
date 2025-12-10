@@ -1,0 +1,57 @@
+<div class="book-card" [class]="'size-' + size">
+  <div class="book-image">
+    <img [src]="book.imageUrl" [alt]="book.title" class="img-fluid">
+    
+    @if (showFavoriteIndicator && isFavorite) {
+      <div class="favorite-badge">
+        <i class="bi bi-heart-fill"></i>
+      </div>
+    }
+    
+    <div class="book-badge {{ conditionClass }}">
+      {{ book.condition | titlecase }}
+    </div>
+    <div class="type-badge" [class.donation]="book.type === 'donacion'">
+      {{ book.type === 'donacion' ? 'Donación' : 'Venta' }}
+    </div>
+  </div>
+
+  <div class="book-content">
+    <h3 class="book-title">{{ book.title }}</h3>
+    <p class="book-author">por {{ book.author }}</p>
+    
+    <div class="book-meta">
+      <span class="price">{{ priceDisplay }}</span>
+      <span class="location">
+        <i class="bi bi-geo-alt"></i>
+        {{ book.location }}
+      </span>
+    </div>
+
+    <p class="book-description">{{ book.description | slice:0:100 }}{{ book.description.length > 100 ? '...' : '' }}</p>
+
+    <div class="user-info" *ngIf="user">
+      <img [src]="user.avatar" [alt]="user.name" class="user-avatar">
+      <div class="user-details">
+        <span class="user-name">{{ user.name }}</span>
+        <div class="user-rating">
+          <i class="bi bi-star-fill"></i>
+          {{ user.rating }}
+        </div>
+      </div>
+    </div>
+
+    <div class="book-actions" *ngIf="showActions">
+      <button class="btn btn-outline-primary btn-sm" (click)="onViewDetails()">
+        <i class="bi bi-eye"></i> Ver
+      </button>
+      <button 
+        class="btn btn-sm" 
+        [class]="favoriteButtonClass"
+        (click)="onToggleFavorite()"
+        [title]="isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'">
+        <i [class]="favoriteIconClass"></i>
+      </button>
+    </div>
+  </div>
+</div>

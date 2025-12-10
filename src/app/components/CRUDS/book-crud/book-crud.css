@@ -1,0 +1,17 @@
+
+.container-fluid {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.btn-modern {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding: 0 16px;
+  }
+}

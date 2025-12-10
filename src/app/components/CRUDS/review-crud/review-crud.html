@@ -1,0 +1,55 @@
+<div class="card shadow-sm mt-4">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">Reseñas del libro</h5>
+  </div>
+
+  <div class="card-body">
+    
+    <!-- Formulario para agregar las reseñas -->
+    <div class="mb-3">
+      <label class="form-label">Calificación (1–5)</label>
+      <input
+        type="number"
+        min="1"
+        max="5"
+        class="form-control"
+        [(ngModel)]="newReview.rating"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Comentario</label>
+      <textarea
+        class="form-control"
+        rows="3"
+        [(ngModel)]="newReview.comment"
+      ></textarea>
+    </div>
+
+    <button class="btn btn-success mb-3" (click)="addReview()">
+      Guardar reseña
+    </button>
+
+    <hr />
+
+    <!-- Lista de reseñas -->
+    <div *ngIf="reviews.length === 0" class="text-muted">
+      No hay reseñas aún.
+    </div>
+
+    <div class="list-group">
+      <div class="list-group-item" *ngFor="let review of reviews">
+        <div class="d-flex justify-content-between">
+          <strong>{{ review.rating | number:'1.0-0' }} ⭐</strong>
+          <small>{{ review.createdAt | date:'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+
+        <p class="mb-1">{{ review.comment }}</p>
+
+        <button class="btn btn-sm btn-outline-danger" (click)="deleteReview(review.id)">
+          Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

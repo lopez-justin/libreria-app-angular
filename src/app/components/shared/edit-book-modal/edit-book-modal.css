@@ -1,0 +1,77 @@
+.modal-content {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  border-radius: 15px 15px 0 0 !important;
+  padding: 1.2rem 1.5rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  border-radius: 0 0 15px 15px;
+  padding: 1rem 1.5rem;
+}
+
+.form-label {
+  color: #495057;
+  font-weight: 600;
+}
+
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 2px solid #dee2e6;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+}
+
+.btn-group .btn {
+  border-radius: 8px !important;
+  padding: 0.75rem;
+  font-weight: 500;
+}
+
+.btn-group .btn.active {
+  transform: scale(0.98);
+}
+
+.input-group-text {
+  background-color: #f8f9fa;
+  border: 2px solid #dee2e6;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.img-thumbnail {
+  border: 3px dashed #dee2e6;
+  padding: 5px;
+  background-color: #f8f9fa;
+}
+
+.ng-invalid.ng-touched {
+  border-color: #dc3545 !important;
+}
+
+.ng-valid.ng-touched {
+  border-color: #28a745 !important;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

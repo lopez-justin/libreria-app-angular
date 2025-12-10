@@ -1,0 +1,142 @@
+.data-table {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.table-search .input-group {
+  max-width: 300px;
+}
+
+.table-modern {
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-modern thead th {
+  background: var(--background);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border);
+  padding: 16px 12px;
+  cursor: default;
+}
+
+.table-modern thead th.sortable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.table-modern thead th.sortable:hover {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.table-modern thead th.sort-asc {
+  color: var(--primary);
+}
+
+.table-modern thead th.sort-desc {
+  color: var(--primary);
+}
+
+.sort-icon {
+  margin-left: 4px;
+  color: var(--text-secondary);
+}
+
+.table-modern thead th.sort-asc .sort-icon,
+.table-modern thead th.sort-desc .sort-icon {
+  color: var(--primary);
+}
+
+.table-modern tbody td {
+  padding: 16px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  cursor: default;
+}
+
+.table-modern tbody tr.table-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.table-modern tbody tr.table-row:hover {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+.table-modern tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+}
+
+.btn-group-sm .btn {
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.table-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.pagination .page-link {
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--background);
+  color: var(--primary);
+}
+
+.pagination-info {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .data-table {
+    padding: 1rem;
+  }
+  
+  .table-responsive {
+    font-size: 0.85rem;
+  }
+  
+  .table-image {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .btn-group-sm .btn {
+    padding: 4px 6px;
+  }
+  
+  .table-search .input-group {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,50 @@
+.book-cover {
+  transition: transform 0.3s ease;
+  border: 3px solid #dee2e6;
+}
+
+.book-cover:hover {
+  transform: scale(1.05);
+}
+
+.modal-content {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  border-radius: 15px 15px 0 0 !important;
+  padding: 1.2rem 1.5rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  border-radius: 0 0 15px 15px;
+  padding: 1rem 1.5rem;
+}
+
+.card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-radius: 10px 10px 0 0 !important;
+  font-weight: 600;
+}
+
+.badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}

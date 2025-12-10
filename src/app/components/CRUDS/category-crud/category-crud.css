@@ -1,0 +1,88 @@
+/* Cards de categoría */
+.category-card {
+  background-color: #ffffff; /* Fondo blanco fuerte */
+  border-radius: 12px;       /* Bordes redondeados */
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+.category-card:hover {
+  transform: translateY(-8px); /* Se eleva un poco */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25); /* Sombra más fuerte */
+  z-index: 10; /* Que sobresalga sobre otras tarjetas */
+}
+
+/* Botones redondeados y con espacio para iconos */
+.btn-group-vertical .btn {
+  border-radius: 8px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.7rem;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+  gap: 6px; /* Espacio entre icono y texto */
+}
+
+/* Botón eliminar en verde */
+.btn-danger {
+  background-color: #198754 !important;
+  border-color: #198754 !important;
+}
+
+/* Título de categoría */
+.category-card h5 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333333;
+}
+
+/* Descripción */
+.category-card p {
+  font-size: 0.9rem;
+  color: #555555;
+  margin-bottom: 1rem;
+}
+
+/* Botones dentro de la tarjeta */
+.category-card .btn {
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.category-card .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .category-card {
+    padding: 0.8rem;
+  }
+
+  .category-card p {
+    font-size: 0.85rem;
+  }
+
+  .btn-group-vertical .btn {
+    flex: 1;
+    margin-bottom: 0.3rem;
+  }
+}
+
+/* Animación para fade in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

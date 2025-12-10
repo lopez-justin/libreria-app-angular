@@ -1,0 +1,26 @@
+<div class="modal-backdrop" [class.show]="visible" (click)="onCancel()">
+  <div class="modal-container {{ modalClass }}" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-icon">
+        <i [class]="getIconClass()"></i>
+      </div>
+      <h3 class="modal-title">{{ title }}</h3>
+      <button type="button" class="btn-close" (click)="onCancel()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <p class="modal-message">{{ message }}</p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary btn-modern" (click)="onCancel()">
+        {{ cancelText }}
+      </button>
+      <button type="button" [class]="confirmButtonClass" (click)="onConfirm()">
+        {{ confirmText }}
+      </button>
+    </div>
+  </div>
+</div>

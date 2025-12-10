@@ -1,0 +1,208 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <button class="btn btn-outline-secondary mb-2" (click)="goBack()">
+            <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
+          </button>
+          <h1 class="display-6 fw-bold text-gradient mb-2">Gestión de Transacciones</h1>
+          <p class="text-muted">Administra las solicitudes de libros de la comunidad</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros y búsqueda -->
+  <div class="row mb-4">
+    <div class="col-md-6 mb-3 mb-md-0">
+      <div class="input-group">
+        <span class="input-group-text bg-white">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar por libro, solicitante u propietario..."
+          (input)="onSearch($event)"
+        />
+      </div>
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" (change)="onStatusFilterChange($event)">
+        <option value="todos">Todos los estados</option>
+        <option value="pendiente">Pendientes</option>
+        <option value="aceptada">Aceptadas</option>
+        <option value="rechazada">Rechazadas</option>
+      </select>
+    </div>
+    <div class="col-md-3 text-end">
+      <span class="badge bg-secondary fs-6">
+        {{ filteredTransactions.length }} transacciones
+      </span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-3 text-muted">Cargando transacciones...</p>
+    </div>
+  }
+
+  <!-- Lista de transacciones -->
+  @if (!loading && filteredTransactions.length > 0) {
+    <div class="row">
+      @for (transaction of filteredTransactions; track transaction.id) {
+        <div class="col-12 mb-3">
+          <div class="card transaction-card shadow-sm">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <!-- Imagen del libro -->
+                <div class="col-md-1 text-center mb-3 mb-md-0">
+                  <img
+                    [src]="transaction.bookImageUrl"
+                    [alt]="transaction.bookTitle"
+                    class="rounded book-thumbnail"
+                  />
+                </div>
+
+                <!-- Información principal -->
+                <div class="col-md-4 mb-3 mb-md-0">
+                  <h5 class="mb-1">{{ transaction.bookTitle }}</h5>
+                  <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge" [ngClass]="getTypeClass(transaction.type)">
+                      {{ getTypeText(transaction.type) }}
+                    </span>
+                    @if (transaction.type === 'venta' && transaction.price) {
+                      <span class="text-success fw-bold">
+                        ${{ transaction.price.toLocaleString('es-ES') }}
+                      </span>
+                    } @else {
+                      <span class="text-warning fw-bold">GRATIS</span>
+                    }
+                  </div>
+                </div>
+
+                <!-- Usuarios -->
+                <div class="col-md-3 mb-3 mb-md-0">
+                  <div class="mb-2">
+                    <small class="text-muted">Solicitante:</small>
+                    <p class="mb-0 fw-semibold">
+                      <i class="bi bi-person me-1"></i>{{ transaction.requesterName }}
+                    </p>
+                  </div>
+                  <div>
+                    <small class="text-muted">Propietario:</small>
+                    <p class="mb-0 fw-semibold">
+                      <i class="bi bi-person-check me-1"></i>{{ transaction.ownerName }}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Estado y fecha -->
+                <div class="col-md-2 mb-3 mb-md-0 text-center">
+                  <span class="badge fs-6 mb-2" [ngClass]="getStatusClass(transaction.status)">
+                    {{ getStatusText(transaction.status) }}
+                  </span>
+                  <p class="mb-0 small text-muted">
+                    <i class="bi bi-calendar me-1"></i>
+                    {{ transaction.requestDate }}
+                  </p>
+                  @if (transaction.responseDate) {
+                    <p class="mb-0 small text-muted">
+                      <i class="bi bi-check-circle me-1"></i>
+                      {{ transaction.responseDate }}
+                    </p>
+                  }
+                </div>
+
+                <!-- Acciones -->
+                <div class="col-md-2 text-end">
+                  <div class="btn-group-vertical btn-group-sm w-100">
+                    @if (transaction.status === 'pendiente') {
+                      <button
+                        class="btn btn-success mb-1"
+                        (click)="onChangeStatus(transaction, 'aceptada')"
+                        title="Aceptar solicitud"
+                      >
+                        <i class="bi bi-check-lg me-1"></i>Aceptar
+                      </button>
+                      <button
+                        class="btn btn-warning mb-1"
+                        (click)="onChangeStatus(transaction, 'rechazada')"
+                        title="Rechazar solicitud"
+                      >
+                        <i class="bi bi-x-lg me-1"></i>Rechazar
+                      </button>
+                    }
+                    <button
+                      class="btn btn-outline-danger"
+                      (click)="onDeleteTransaction(transaction)"
+                      title="Eliminar transacción"
+                    >
+                      <i class="bi bi-trash me-1"></i>Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mensaje opcional -->
+              @if (transaction.message) {
+                <div class="mt-3 p-2 bg-light rounded">
+                  <small class="text-muted">
+                    <i class="bi bi-chat-quote me-1"></i>Mensaje:
+                  </small>
+                  <p class="mb-0 fst-italic">"{{ transaction.message }}"</p>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Sin resultados -->
+  @if (!loading && filteredTransactions.length === 0) {
+    <div class="text-center py-5">
+      <i class="bi bi-inbox display-1 text-muted"></i>
+      <h4 class="mt-3 text-muted">No hay transacciones</h4>
+      <p class="text-muted">
+        Las solicitudes de libros aparecerán aquí cuando los usuarios soliciten libros del catálogo.
+      </p>
+      <button class="btn btn-primary" (click)="goBack()">
+        <i class="bi bi-arrow-left me-2"></i>Volver al Dashboard
+      </button>
+    </div>
+  }
+
+  <!-- Modal para confirmar cambio de estado -->
+  <app-confirm-modal
+    [title]="newStatus === 'aceptada' ? 'Aceptar Solicitud' : 'Rechazar Solicitud'"
+    [message]="'¿Estás seguro de que quieres ' + (newStatus === 'aceptada' ? 'aceptar' : 'rechazar') + ' la solicitud del libro ' + (transactionToUpdate?.bookTitle || '') + '?'"
+    [confirmText]="newStatus === 'aceptada' ? 'Aceptar' : 'Rechazar'"
+    [cancelText]="'Cancelar'"
+    [type]="newStatus === 'aceptada' ? 'success' : 'warning'"
+    [visible]="showStatusModal"
+    (confirm)="confirmStatusChange()"
+    (cancel)="closeStatusModal()">
+  </app-confirm-modal>
+
+  <!-- Modal para confirmar eliminación -->
+  <app-confirm-modal
+    [title]="'Eliminar Transacción'"
+    [message]="'¿Estás seguro de que quieres eliminar la transacción del libro ' + (transactionToDelete?.bookTitle || '') + '? Esta acción no se puede deshacer.'"
+    [confirmText]="'Eliminar'"
+    [cancelText]="'Cancelar'"
+    [type]="'danger'"
+    [visible]="showDeleteModal"
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDeleteModal()">
+  </app-confirm-modal>
+</div>
+

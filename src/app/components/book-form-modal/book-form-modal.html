@@ -1,0 +1,18 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content-overlay" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">
+        <i class="bi bi-book me-2"></i> Nuevo Libro
+      </h5>
+      <button type="button" class="btn-close" (click)="onClose()" aria-label="Cerrar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-book-form 
+        (bookCreated)="onBookCreated()"
+        (formCanceled)="onFormCanceled()">
+      </app-book-form>
+    </div>
+  </div>
+</div>

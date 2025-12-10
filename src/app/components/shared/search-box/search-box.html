@@ -1,0 +1,27 @@
+<div class="search-box" [class]="'size-' + size">
+  <div class="search-input-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input
+      type="text"
+      class="search-input"
+      [placeholder]="placeholder"
+      [(ngModel)]="searchTerm"
+      (input)="onInputChange()"
+      (keypress)="onKeyPress($event)"
+      [disabled]="disabled"
+    />
+    <button
+      *ngIf="searchTerm"
+      type="button"
+      class="btn-clear"
+      (click)="onClear()"
+      [disabled]="disabled"
+    >
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+  
+  <div class="search-hint" *ngIf="searchTerm">
+    Presiona Enter para buscar inmediatamente
+  </div>
+</div>

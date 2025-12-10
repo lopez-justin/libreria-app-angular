@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <div class="d-flex mb-3 gap-2">
+    <input type="text" class="form-control" placeholder="Buscar categoría..." [(ngModel)]="searchTerm">
+    <button class="btn btn-primary" (click)="openCreateModal()">Crear nueva categoría</button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3" *ngFor="let category of filteredCategories">
+      <div class="category-card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{category.name}}</h5>
+          <p class="card-text">{{category.description}}</p>
+          <div class="btn-group-vertical w-100">
+            <button class="btn btn-info btn-sm" (click)="viewBooks(category)">
+              <i class="bi bi-book"></i>Ver libros</button>
+            <button class="btn btn-warning btn-sm" (click)="editCategory(category)">
+              <i class="bi bi-pencil-square"></i>Editar</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteCategory(category)">
+              <i class="bi bi-trash"></i>Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Crear -->
+  <div class="modal fade" [class.show]="showCreateModal" style="display: block;" *ngIf="showCreateModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Crear categoría</h5>
+          <button type="button" class="btn-close" (click)="closeCreateModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="categoryForm" (ngSubmit)="createCategory()">
+            <div class="mb-3">
+              <label>Nombre</label>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="mb-3">
+              <label>Descripción</label>
+              <textarea class="form-control" formControlName="description"></textarea>
+            </div>
+            
+              
+            
+            <button type="submit" class="btn btn-success" [disabled]="categoryForm.invalid">Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar -->
+  <div class="modal fade" [class.show]="showEditModal" style="display: block;" *ngIf="showEditModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar categoría</h5>
+          <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editForm" (ngSubmit)="saveEdit()">
+            <div class="mb-3">
+              <label>Nombre</label>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="mb-3">
+              <label>Descripción</label>
+              <textarea class="form-control" formControlName="description"></textarea>
+            </div>
+            
+    
+            
+            <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">Guardar cambios</button>
+            <button type="button" class="btn btn-secondary ms-2" (click)="closeEditModal()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de libros -->
+  <div *ngIf="showBooks" class="mt-4">
+    <h5>Libros de la categoría</h5>
+    <div class="list-group mb-3">
+      <div *ngFor="let book of books" class="list-group-item">
+        <strong>{{book.title}}</strong> - {{book.author}}
+      </div>
+    </div>
+    <button class="btn btn-secondary" (click)="closeBooks()">Cerrar libros</button>
+  </div>
+</div>

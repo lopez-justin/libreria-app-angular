@@ -1,0 +1,333 @@
+<div class="container py-4">
+  <!-- Header -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="display-6 fw-bold text-gradient mb-2">
+        <i class="bi bi-plus-circle me-2"></i>Nuevo Libro
+      </h1>
+      <p class="text-muted">Comparte un libro con la comunidad</p>
+    </div>
+  </div>
+
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+    
+    <div class="card shadow mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Información Básica</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8 mb-3">
+            <label for="title" class="form-label fw-bold">
+              <i class="bi bi-book me-1"></i>Título del Libro *
+            </label>
+            <input type="text" 
+                   class="form-control" 
+                   id="title"
+                   formControlName="title"
+                   [ngClass]="{'is-invalid': f['title'].touched && f['title'].invalid}">
+            @if (f['title'].touched && f['title'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['title'].errors?.['required']) {
+                  El título es requerido
+                }
+                @if (f['title'].errors?.['minlength']) {
+                  Mínimo 3 caracteres
+                }
+                @if (f['title'].errors?.['maxlength']) {
+                  Máximo 100 caracteres
+                }
+              </div>
+            }
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="author" class="form-label fw-bold">
+              <i class="bi bi-person me-1"></i>Autor *
+            </label>
+            <input type="text" 
+                   class="form-control" 
+                   id="author"
+                   formControlName="author"
+                   [ngClass]="{'is-invalid': f['author'].touched && f['author'].invalid}">
+            @if (f['author'].touched && f['author'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['author'].errors?.['required']) {
+                  El autor es requerido
+                }
+                @if (f['author'].errors?.['minlength']) {
+                  Mínimo 3 caracteres
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="isbn" class="form-label fw-bold">
+              <i class="bi bi-upc-scan me-1"></i>ISBN *
+            </label>
+            <input type="text" 
+                   class="form-control" 
+                   id="isbn"
+                   formControlName="isbn"
+                   [ngClass]="{'is-invalid': f['isbn'].touched && f['isbn'].invalid}">
+            @if (f['isbn'].touched && f['isbn'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['isbn'].errors?.['required']) {
+                  El ISBN es requerido
+                }
+                @if (f['isbn'].errors?.['pattern']) {
+                  Solo números y guiones
+                }
+              </div>
+            }
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="categoryId" class="form-label fw-bold">
+              <i class="bi bi-tags me-1"></i>Categoría *
+            </label>
+            <select class="form-select" 
+                    id="categoryId"
+                    formControlName="categoryId"
+                    [ngClass]="{'is-invalid': f['categoryId'].touched && f['categoryId'].invalid}">
+              <option value="" disabled selected>Seleccione una categoría</option>
+              @for (cat of categories; track cat.id) {
+                <option [value]="cat.id">{{ cat.name }}</option>
+              }
+            </select>
+            @if (f['categoryId'].touched && f['categoryId'].invalid) {
+              <div class="invalid-feedback">
+                Por favor seleccione una categoría
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-stars me-2"></i>Detalles</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <label for="condition" class="form-label fw-bold">
+              <i class="bi bi-stars me-1"></i>Condición *
+            </label>
+            <select class="form-select" 
+                    id="condition"
+                    formControlName="condition"
+                    [ngClass]="{'is-invalid': f['condition'].touched && f['condition'].invalid}">
+              <option value="" disabled selected>Seleccione la condición</option>
+              @for (cond of conditions; track cond.value) {
+                <option [value]="cond.value">{{ cond.label }}</option>
+              }
+            </select>
+            @if (f['condition'].touched && f['condition'].invalid) {
+              <div class="invalid-feedback">
+                Por favor seleccione la condición
+              </div>
+            }
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <label class="form-label fw-bold d-block">
+              <i class="bi bi-currency-dollar me-1"></i>Tipo de Transacción *
+            </label>
+            <div class="row g-3">
+              @for (typeOption of typeOptions; track typeOption.value) {
+                <div class="col-md-6">
+                  <div class="form-check form-check-card">
+                    <input class="form-check-input" 
+                           type="radio" 
+                           name="type" 
+                           [id]="'type_' + typeOption.value"
+                           [value]="typeOption.value"
+                           formControlName="type"
+                           (change)="onTypeChange(typeOption.value)">
+                    <label class="form-check-label w-100" [for]="'type_' + typeOption.value">
+                      <div class="card" 
+                           [ngClass]="{'border-primary': isTypeSelected(typeOption.value), 'border-light': !isTypeSelected(typeOption.value)}">
+                        <div class="card-body text-center">
+                          <i class="bi {{typeOption.icon}} display-6 mb-2" 
+                             [ngClass]="{'text-primary': typeOption.color === 'primary', 'text-success': typeOption.color === 'success'}"></i>
+                          <h5 class="card-title">{{ typeOption.label }}</h5>
+                          @if (typeOption.value === 'donacion') {
+                            <p class="card-text text-muted small">Comparte sin costo</p>
+                          } @else {
+                            <p class="card-text text-muted small">Establece un precio</p>
+                          }
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              }
+            </div>
+            @if (f['type'].touched && f['type'].invalid) {
+              <div class="invalid-feedback d-block">
+                Por favor seleccione el tipo
+              </div>
+            }
+          </div>
+        </div>
+
+        @if (bookForm.get('type')?.value === 'venta') {
+          <div class="row">
+            <div class="col-md-6">
+              <label for="price" class="form-label fw-bold">
+                <i class="bi bi-tag me-1"></i>Precio ($) *
+              </label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" 
+                       class="form-control" 
+                       id="price"
+                       formControlName="price"
+                       [ngClass]="{'is-invalid': f['price'].touched && f['price'].invalid}"
+                       min="10"
+                       max="1000"
+                       step="100">
+                <span class="input-group-text">.00</span>
+              </div>
+              @if (f['price'].touched && f['price'].invalid) {
+                <div class="invalid-feedback d-block">
+                  @if (f['price'].errors?.['required']) {
+                    El precio es requerido para venta
+                  }
+                  @if (f['price'].errors?.['min']) {
+                    Mínimo $1
+                  }
+                  @if (f['price'].errors?.['max']) {
+                    Máximo $1000
+                  }
+                </div>
+              }
+              <div class="form-text">Precio en dólares</div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Ubicación y Descripción</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="location" class="form-label fw-bold">
+              <i class="bi bi-geo-alt me-1"></i>Ubicación *
+            </label>
+            <input type="text" 
+                   class="form-control" 
+                   id="location"
+                   formControlName="location"
+                   [ngClass]="{'is-invalid': f['location'].touched && f['location'].invalid}">
+            @if (f['location'].touched && f['location'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['location'].errors?.['required']) {
+                  La ubicación es requerida
+                }
+                @if (f['location'].errors?.['minlength']) {
+                  Mínimo 3 caracteres
+                }
+              </div>
+            }
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="imageUrl" class="form-label fw-bold">
+              <i class="bi bi-image me-1"></i>URL de la Imagen *
+            </label>
+            <input type="url" 
+                   class="form-control" 
+                   id="imageUrl"
+                   formControlName="imageUrl"
+                   [ngClass]="{'is-invalid': f['imageUrl'].touched && f['imageUrl'].invalid}">
+            @if (f['imageUrl'].touched && f['imageUrl'].invalid) {
+              <div class="invalid-feedback">
+                @if (f['imageUrl'].errors?.['required']) {
+                  La imagen es requerida
+                }
+                @if (f['imageUrl'].errors?.['pattern']) {
+                  URL inválida (debe empezar con http:// o https://)
+                }
+              </div>
+            }
+            @if (bookForm.get('imageUrl')?.value) {
+              <div class="mt-3">
+                <p class="text-muted mb-1"><small>Vista previa:</small></p>
+                <img [src]="bookForm.get('imageUrl')?.value" 
+                     alt="Vista previa" 
+                     class="img-thumbnail"
+                     style="max-height: 150px; max-width: 150px;"
+                     onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400'">
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label fw-bold">
+            <i class="bi bi-chat-text me-1"></i>Descripción *
+          </label>
+          <textarea class="form-control" 
+                    id="description"
+                    formControlName="description"
+                    rows="4"
+                    [ngClass]="{'is-invalid': f['description'].touched && f['description'].invalid}"></textarea>
+          @if (f['description'].touched && f['description'].invalid) {
+            <div class="invalid-feedback">
+              @if (f['description'].errors?.['required']) {
+                La descripción es requerida
+              }
+              @if (f['description'].errors?.['minlength']) {
+                Mínimo 10 caracteres
+              }
+              @if (f['description'].errors?.['maxlength']) {
+                Máximo 500 caracteres
+              }
+            </div>
+          }
+          <div class="form-text">Describe el libro, su estado, anotaciones especiales...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button type="button" 
+              class="btn btn-outline-secondary" 
+              (click)="onCancel()">
+        <i class="bi bi-x-circle me-2"></i>Cancelar
+      </button>
+      
+      <button type="submit" 
+              class="btn btn-primary"
+              [disabled]="bookForm.invalid || loading">
+        @if (loading) {
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Guardando...
+        } @else {
+          <i class="bi bi-check-circle me-2"></i>Guardar Libro
+        }
+      </button>
+    </div>
+  </form>
+</div>
+
+<app-confirm-modal
+  [title]="'Cancelar Formulario'"
+  [message]="'¿Estás seguro de que quieres cancelar? Se perderán los datos no guardados.'"
+  [confirmText]="'Sí, cancelar'"
+  [cancelText]="'Continuar editando'"
+  [type]="'warning'"
+  [visible]="showCancelModal"
+  (confirm)="confirmCancel()"
+  (cancel)="cancelCancel()">
+</app-confirm-modal>

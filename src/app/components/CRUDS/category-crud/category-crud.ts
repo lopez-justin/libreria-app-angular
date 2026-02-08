@@ -37,13 +37,13 @@ export class CategoryCrud {
     this.categoryForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-     
+
     });
 
     this.editForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-    
+
     });
 
     this.loadCategories();
@@ -57,7 +57,7 @@ export class CategoryCrud {
       : this.categories;
   }
 
-  private findCategoryOnServer(id: number | string): Promise<Category | undefined> {
+  private findCategoryOnServer(id: number | undefined): Promise<Category | undefined> {
   // devuelve la categoría tal cual la tiene el servidor (o undefined)
   return new Promise((resolve) => {
     this.categoryService.getCategories().subscribe({
@@ -112,7 +112,7 @@ export class CategoryCrud {
 
 async saveEdit(): Promise<void> {
   if (this.editForm.valid && this.editingCategory) {
-    // buscar la categoría en el servidor para obtener su id 
+    // buscar la categoría en el servidor para obtener su id
     const serverCat = await this.findCategoryOnServer(this.editingCategory.id);
     if (!serverCat) {
       alert('No se encontró la categoría en el servidor. No se pudo actualizar.');

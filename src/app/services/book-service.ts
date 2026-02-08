@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Book } from '../models/book';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  private apiUrl = "http://localhost:3000/books";
+
+  private apiUrl = `${environment.apiBaseUrl}/Book`;
 
   constructor(private http: HttpClient) { }
 
@@ -39,7 +41,7 @@ export class BookService {
 
   searchBooks(param: string): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl).pipe(
-      map(books => books.filter(b => 
+      map(books => books.filter(b =>
         b.title.toLowerCase().includes(param.toLowerCase()) ||
         b.author.toLowerCase().includes(param.toLowerCase())
       ))

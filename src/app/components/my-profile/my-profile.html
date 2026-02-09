@@ -1,0 +1,112 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Mi Perfil</h4>
+        </div>
+
+        <div class="card-body">
+
+          <!-- Avatar -->
+          <div class="text-center mb-4">
+            <img
+              [src]="user.avatar || 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png'"
+              class="rounded-circle img-thumbnail"
+              width="120"
+             alt="User avatar"/>
+          </div>
+
+          <!-- Avatar url -->
+          <div class="mb-3">
+            <label class="form-label">URL del Avatar</label>
+            <input
+              class="form-control"
+              [(ngModel)]="user.avatar"
+              [readonly]="!isEditing"
+            />
+          </div>
+
+          <!-- Nombre -->
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input
+              class="form-control"
+              [(ngModel)]="user.name"
+              [readonly]="!isEditing"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+              class="form-control"
+              [(ngModel)]="user.email"
+              readonly
+            />
+          </div>
+
+          <!-- Teléfono -->
+          <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input
+              class="form-control"
+              [(ngModel)]="user.phone"
+              [readonly]="!isEditing"
+            />
+          </div>
+
+          <!-- Ubicación -->
+          <div class="mb-3">
+            <label class="form-label">Ubicación</label>
+            <input
+              class="form-control"
+              [(ngModel)]="user.location"
+              [readonly]="!isEditing"
+            />
+          </div>
+
+          <!-- Fecha -->
+          <div class="mb-3">
+            <label class="form-label">Miembro desde</label>
+            <input
+              class="form-control"
+              [value]="user.memberSince | date:'longDate'"
+              readonly
+            />
+          </div>
+
+        </div>
+
+        <div class="card-footer text-end">
+          @if (!isEditing) {
+            <button
+              class="btn btn-outline-primary"
+              (click)="enableEdit()">
+              Editar
+            </button>
+          }
+
+          @if (isEditing) {
+            <button
+              class="btn btn-secondary me-2"
+              (click)="cancelEdit()">
+              Cancelar
+            </button>
+          }
+
+          @if (isEditing) {
+            <button
+              class="btn btn-success"
+              (click)="saveChanges()">
+              Guardar
+            </button>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

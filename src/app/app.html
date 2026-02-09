@@ -3,11 +3,11 @@
     <a class="navbar-brand fw-bold text-gradient" routerLink="/home">
       <i class="bi bi-book-half me-2"></i>Librería Comunitaria
     </a>
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
@@ -20,22 +20,42 @@
             <i class="bi bi-grid me-1"></i> Catálogo
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/book-form" routerLinkActive="active">
-            <i class="bi bi-plus-circle me-1"></i> Nuevo Libro
-          </a>
-        </li>
+
+        @if (auth.isLoggedIn()) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/book-form" routerLinkActive="active">
+              <i class="bi bi-plus-circle me-1"></i> Nuevo Libro
+            </a>
+          </li>
+        }
       </ul>
-      
+
       <div class="navbar-nav">
-        <a class="nav-link" routerLink="/crud/favorites" routerLinkActive="active">
-          <i class="bi bi-heart me-1"></i> Favoritos
-        </a>
-        
-        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
-          <i class="bi bi-speedometer2 me-1"></i> Dashboard
-        </a>
-        
+        @if (auth.isLoggedIn()) {
+          <a class="nav-link" routerLink="/crud/favorites" routerLinkActive="active">
+            <i class="bi bi-heart me-1"></i> Favoritos
+          </a>
+
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+          </a>
+
+          <div class="btn-group">
+            <button type="button" class="dropdown-toggle nav-link" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+              <span class="me-2"> {{ auth.getNameFromEmail() | titlecase }}</span>
+              <!--<i class="bi bi-person me-1"></i> Mi Cuenta-->
+            </button>
+            <ul class="dropdown-menu dropdown-menu-lg-end">
+              <li><button class="dropdown-item" type="button" routerLink="/profile">Mi perfil</button></li>
+              <li><button class="dropdown-item" type="button" routerLink="crud/transactions">Transacciones</button></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" type="button" (click)="auth.logout()">Cerrar sesión</button></li>
+            </ul>
+          </div>
+        } @else {
+          <button class="nav-link" routerLink="/register">Registrarse</button>
+          <button class="nav-link" routerLink="/login">Iniciar Sesión</button>
+        }
       </div>
     </div>
   </div>

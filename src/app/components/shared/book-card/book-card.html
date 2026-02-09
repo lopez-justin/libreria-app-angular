@@ -1,13 +1,13 @@
 <div class="book-card" [class]="'size-' + size">
   <div class="book-image">
     <img [src]="book.imageUrl" [alt]="book.title" class="img-fluid">
-    
+
     @if (showFavoriteIndicator && isFavorite) {
       <div class="favorite-badge">
         <i class="bi bi-heart-fill"></i>
       </div>
     }
-    
+
     <div class="book-badge {{ conditionClass }}">
       {{ book.condition | titlecase }}
     </div>
@@ -19,7 +19,7 @@
   <div class="book-content">
     <h3 class="book-title">{{ book.title }}</h3>
     <p class="book-author">por {{ book.author }}</p>
-    
+
     <div class="book-meta">
       <span class="price">{{ priceDisplay }}</span>
       <span class="location">
@@ -34,10 +34,6 @@
       <img [src]="user.avatar" [alt]="user.name" class="user-avatar">
       <div class="user-details">
         <span class="user-name">{{ user.name }}</span>
-        <div class="user-rating">
-          <i class="bi bi-star-fill"></i>
-          {{ user.rating }}
-        </div>
       </div>
     </div>
 
@@ -45,8 +41,8 @@
       <button class="btn btn-outline-primary btn-sm" (click)="onViewDetails()">
         <i class="bi bi-eye"></i> Ver
       </button>
-      <button 
-        class="btn btn-sm" 
+      <button
+        class="btn btn-sm"
         [class]="favoriteButtonClass"
         (click)="onToggleFavorite()"
         [title]="isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'">

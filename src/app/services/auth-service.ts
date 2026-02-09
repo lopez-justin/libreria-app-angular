@@ -44,7 +44,7 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return null;
     const decoded: any = jwtDecode(token);
-    return decoded['role'] || null; //Porque ClaimTypes.Role se serializa como role en el JWT
+    return decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || null;
   }
 
 

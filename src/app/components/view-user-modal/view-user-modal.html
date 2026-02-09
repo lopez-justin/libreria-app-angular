@@ -1,0 +1,47 @@
+@if (isVisible) {
+  <div class="modal fade show d-block" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Detalle del Usuario</h5>
+          <button type="button" class="btn-close btn-close-white" (click)="close()"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4 text-center mb-3">
+              <img
+                [src]="user.avatar || 'https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png'"
+                class="rounded-circle img-thumbnail"
+                width="120"
+              />
+            </div>
+
+            <div class="col-md-8">
+              <p><strong>Nombre:</strong> {{ user.name }}</p>
+              <p><strong>Email:</strong> {{ user.email }}</p>
+              <p><strong>Teléfono:</strong> {{ user.phone || 'No registrado' }}</p>
+              <p><strong>Ubicación:</strong> {{ user.location || 'No registrada' }}</p>
+              <p><strong>Miembro desde:</strong> {{ user.memberSince | date:'longDate' }}</p>
+              <p>
+                <strong>Estado:</strong>
+                <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
+                  {{ user.active ? 'Activo' : 'Inactivo' }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="close()">Cerrar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop fade show"></div>
+}
+

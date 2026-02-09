@@ -28,6 +28,10 @@ export class UserService {
     return this.http.put<void>(`${this.apiUrl}/${user.id}`, user);
   }
 
+  deactivate(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${id}/deactivate`, {});
+  }
+
   delete(id: number): Observable<User> {
     return this.http.delete<User>(`${this.apiUrl}/${id}`);
   }

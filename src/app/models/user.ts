@@ -5,6 +5,6 @@ export interface User {
   phone?: string;
   location?: string;
   avatar?: string;
-  memberSince: string;
+  memberSince?: string;
   active: boolean;
 }

@@ -12,6 +12,8 @@ import { Favorites } from './components/CRUDS/favorite-crud/favorite-crud';
 import {Login} from './components/login/login';
 import {Register} from './components/register/register';
 import {MyProfile} from './components/my-profile/my-profile';
+import {UserCrud} from './components/CRUDS/user-crud/user-crud';
+import {AuthGuard} from './guard/auth.guard';
 
 
 export const routes: Routes = [
@@ -26,6 +28,7 @@ export const routes: Routes = [
   { path: "crud/transactions", component: TransactionCrud },
   { path: "crud/categories", component: CategoryCrud },
   { path: "crud/favorites", component: Favorites},
+  { path: "crud/users", component: UserCrud, canActivate: [AuthGuard], data: { roles: ['admin', 'editor'] } },
   { path: "profile", component: MyProfile },
 
   { path: "", redirectTo: "home", pathMatch: "full" },

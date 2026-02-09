@@ -40,6 +40,14 @@ export class AuthService {
     return !!this.getToken();
   }
 
+  getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const decoded: any = jwtDecode(token);
+    return decoded['role'] || null; //Porque ClaimTypes.Role se serializa como role en el JWT
+  }
+
+
   getUserIdFromToken() {
     const token = this.getToken();
     if (!token) return null;

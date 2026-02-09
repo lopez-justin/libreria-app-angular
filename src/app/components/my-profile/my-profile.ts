@@ -3,11 +3,12 @@ import { User } from '../../models/user';
 import {UserService} from '../../services/user-service';
 import {AuthService} from '../../services/auth-service';
 import {FormsModule} from '@angular/forms';
-import {DatePipe} from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-my-profile',
   imports: [
+    CommonModule,
     FormsModule,
     DatePipe
   ],
